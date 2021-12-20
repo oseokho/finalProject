@@ -1,0 +1,82 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<jsp:include page="../includes/head.jsp"/>
+	<sec:csrfMetaTags/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login</title>
+    <!-- Custom fonts for this template-->
+</head>
+
+<body class="h-100">
+   <sec:authentication property="principal" var="pinfo"/>
+	<sec:authorize access="isAuthenticated()">
+    </sec:authorize>
+   <jsp:include page="../includes/header.jsp"/>
+    <div class="authincation h-100 mt-4">
+        <div class="container-fluid h-100 mt-4">
+            <div class="row justify-content-center h-100 align-items-center mt-4">
+                <div class="col-md-6 mt-5">
+                    <div class="authincation-content mt-5">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+                                    <h4 class="text-center mb-4 mt-4">회원 탈퇴</h4>
+                                   		<form method="post">
+                                        		<div class="form-group">
+                                            		<label for ="id"><strong>아이디</strong></label>
+                                            		<input type="text" class="form-control form-control-user" 
+                                           			 id="id" name="id" placeholder="아이디를 입력해주세요" onkeyup="checkId()">
+                                        			<p id="alertid" class="alert"></p>
+		                                            <label for="password"><strong>패스워드</strong></label>
+		                                           <input type="password" class="form-control form-control-user"
+		                                           	id="pw" name="pw" placeholder="패스워드를 입력해주세요">
+		                                            <label for="comment"><strong>탈퇴 사유</strong></label>
+		                                           <textarea class="form-control form-control-user" name="comments" id="comments" placeholder="탈퇴 사유를 입력해주세요">
+				                                	</textarea>
+				                                </div>
+				                                <div class="text-left">
+                                            		<button type="submit" class="btn btn-primary btn-block">회원 탈퇴</button>
+                                        		</div>
+                                        <sec:csrfInput/>
+                                    </form>
+                                    <div class="new-account mt-3">
+                                        <p>마음이 바뀌셨나요?<a class="text-primary" href="/sample2/index" >인덱스 페이지</a></p>
+                                        <p>계정이 없으신가요? <a class="text-primary" href="member/register">회원가입</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<jsp:include page="../includes/footer.jsp"/>
+<script>
+		function checkId() {
+			var id = $('#id').val();
+			console.log(id);
+			$.getJSON("/member/idcheck?id="+id).done(function(result) {
+				if(result != 1) {
+					$('#alertid').text("");
+					$('#alertid').text("존재하지 않는 ID입니다. 확인 후 ID를 변경해주세요")
+					$('#alertid').css('color', 'red');
+				} else{
+					$('#alertid').text("");
+					$('#alertid').text("존재하는 ID입니다.") 
+					$('#alertid').css('color', 'green');
+				}
+			});
+		}
+</script>
+<jsp:include page="../includes/foot.jsp"/>
+</html>

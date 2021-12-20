@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.bbbboone.mapper.HitPointMapper">
+  	<insert id="insert">
+	 INSERT INTO TBL_HITPOINT(HITCOUNT, ID , BNO)
+	VALUES (1, #{id}, #{bno})
+	</insert>
+	
+	<update id="hitDown">
+	UPDATE TBL_HITPOINT
+	SET HITCOUNT= 0
+	WHERE BNO = '#{bno}' AND ID = #{id}
+	</update>
+	
+	<update id="hitUp">
+	UPDATE TBL_HITPOINT
+	SET HITCOUNT= 1
+	WHERE BNO = #{bno} AND ID =#{id}
+	</update>
+	
+	<select id="countByBno">
+	SELECT HITCOUNT
+	FROM TBL_HITPOINT
+	WHERE BNO = #{bno}
+	</select>
+	
+	<select id="readId">
+	SELECT *
+	FROM TBL_HITPOINT
+	WHERE ID= #{id}
+</select>
+
+  </mapper>

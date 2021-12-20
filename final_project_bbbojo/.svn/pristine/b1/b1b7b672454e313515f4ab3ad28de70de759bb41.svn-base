@@ -1,0 +1,28 @@
+package com.bbbboone.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.bbbboone.domain.Criteria;
+import com.bbbboone.domain.PageDTO;
+import com.bbbboone.service.WithdrawService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
+@Controller
+@Log4j
+@RequestMapping("/adminWithdraw/*")
+@AllArgsConstructor
+public class AdminWithdrawController {
+	private WithdrawService service;
+	
+	@GetMapping("list")
+	public void list(Model model, Criteria cri) {
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("page", new PageDTO(service.getTotal(cri), cri));
+		log.info("adminWithdraw");
+	}
+}

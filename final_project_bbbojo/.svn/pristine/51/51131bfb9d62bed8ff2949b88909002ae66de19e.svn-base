@@ -1,0 +1,7 @@
+package com.bbbboone.service;
+
+public interface HitPointService {
+	
+	String get(Long bno);
+	
+}
